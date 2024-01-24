@@ -3,31 +3,27 @@ using System.Device.Gpio;
 
 public class GpioHandler
 {
-    public event EventHandler? PinChangedStatus;
-    private PinEvent _previousStatus = PinEvent.None;
+    private PinEvent _currentStatus = PinEvent.None;
+    private GpioController controller;
+    
     public GpioHandler(int pin)
     {
-        using var controller = new GpioController();
+        // TODO: close the controller
+        controller = new GpioController();
         controller.OpenPin(pin, PinMode.InputPullDown);
         controller.RegisterCallbackForPinValueChangedEvent(
             pin,
             PinEventTypes.Falling | PinEventTypes.Rising,
             OnPinEvent);
     }
+    public PinEvent GetCurrentStatus()
+    {
+        return _currentStatus;
+    }
     
     private void OnPinEvent(object sender, PinValueChangedEventArgs args)
     {
-        var pinArgs = new PinChangeEventArgs
-        {
-            PinStatus = (PinEvent)args.ChangeType
-        };
-        
-        PinChangedStatus?.Invoke(this, pinArgs);
-    }
-    
-    public class PinChangeEventArgs : EventArgs
-    {
-        public PinEvent PinStatus { get; set; }
+        _currentStatus = (PinEvent)args.ChangeType;
     }
     
 }
