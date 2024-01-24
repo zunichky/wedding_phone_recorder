@@ -54,9 +54,10 @@ public class Runner
     private void StartRecording()
     {
         var homeDirectory = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
-        var finalPath = Path.Combine(homeDirectory, "Recordings");
-        Directory.CreateDirectory(finalPath);
-        _soundManager.NewRecording(Utilities.Utilities.GetUniqueFileName(homeDirectory));
+        var finalFolder = Path.Combine(homeDirectory, "Recordings");
+        Directory.CreateDirectory(finalFolder);
+        var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(homeDirectory) + ".mp3");
+        _soundManager.NewRecording(fullPath);
     }
 
     private void Cleanup()
