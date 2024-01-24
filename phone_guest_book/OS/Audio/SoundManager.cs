@@ -65,6 +65,7 @@ public class SoundManger
     public Recorder NewRecording(string path)
     {
         var recording = new Recorder();
+        recording.Record(path);
         CurrentRecordings.Add(recording);
         return recording;
     }
