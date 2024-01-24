@@ -1,4 +1,5 @@
 ﻿using phone_guest_book.os.audio;
+using phone_guest_book.OS.Audio;
 using phone_guest_book.OS.Audio.Sound;
 
 namespace phone_guest_book;
@@ -11,6 +12,8 @@ public class Runner
     private GpioHandler handler;
     private DateTime _lastInterrupt = DateTime.Now;
     private SoundManger _soundManager = new SoundManger();
+    private Player x = new Player();
+
     public void Start()
     {
         handler = new GpioHandler(6);
@@ -46,12 +49,13 @@ public class Runner
     }
 
     private void PlayWelcomeSound()
-    {
-        _soundManager.PlaySound(new NAudioSound("sounds/welcome.wav"));
+    { 
+        x.Play("sounds/welcome.wav");
+        //_soundManager.PlaySound(new NAudioSound("sounds/welcome.wav"));
     }
 
     private void Reset()
     {
-        _soundManager.StopPlaying();
+       // _soundManager.StopPlaying();
     }
 }

@@ -1,4 +1,5 @@
-﻿using phone_guest_book.OS.Audio.Recording;
+﻿using phone_guest_book.OS.Audio;
+using phone_guest_book.OS.Audio.Recording;
 using phone_guest_book.OS.Audio.Sound;
 
 namespace phone_guest_book.os.audio;
@@ -8,16 +9,17 @@ namespace phone_guest_book.os.audio;
 
 public class SoundManger
 {
-    private List<ISound> _currentSounds { get; set; } = [];
+    private List<Player> _currentSounds { get; set; } = [];
     private List<IRecording> _currentRecordings { get; set; } = [];
     //TODO: Settings (volume, etc)
-    public void PlaySound(NAudioSound sound)
+    public void PlaySound(string fileName)
     {
-        if (!sound.IsPlaying())
+        Player curSound = new Player();
+        if (!curSound.Playing)
         {
-            sound.Play();
-            sound.SoundFinished += OnPlaybackStopped;
-            _currentSounds.Add(sound);
+            curSound.Play(fileName);
+            curSound.PlaybackFinished += OnPlaybackStopped;
+            _currentSounds.Add(curSound);
         }
     }
 
@@ -25,7 +27,7 @@ public class SoundManger
     {
         foreach (var sound in _currentSounds)
         {
-            if (sound.IsPlaying())
+            if (sound.Playing)
                 sound.Stop();
         }
     }
@@ -48,7 +50,7 @@ public class SoundManger
     /// <returns></returns>
     public bool IsSoundPlaying()
     {
-        return _currentSounds.Any(curSound => curSound.IsPlaying());
+        return _currentSounds.Any(curSound => curSound.Playing);
     }
     
     /// <summary>
