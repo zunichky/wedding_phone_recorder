@@ -8,8 +8,8 @@ namespace phone_guest_book.os.audio;
 
 public class SoundManger
 {
-    private List<ISound> CurrentSounds { get; set; } = [];
-    private List<IRecording> CurrentRecordings { get; set; } = [];
+    private List<ISound> _currentSounds { get; set; } = [];
+    private List<IRecording> _currentRecordings { get; set; } = [];
     //TODO: Settings (volume, etc)
     public void PlaySound(NAudioSound sound)
     {
@@ -17,10 +17,19 @@ public class SoundManger
         {
             sound.Play();
             sound.SoundFinished += OnPlaybackStopped;
-            CurrentSounds.Add(sound);
+            _currentSounds.Add(sound);
         }
     }
 
+    public void StopPlaying()
+    {
+        foreach (var sound in _currentSounds)
+        {
+            if (sound.IsPlaying())
+                sound.Stop();
+        }
+    }
+    
     public void StopPlaying(ISound sound)
     {   
         if (sound.IsPlaying()) 
@@ -39,7 +48,7 @@ public class SoundManger
     /// <returns></returns>
     public bool IsSoundPlaying()
     {
-        return CurrentSounds.Any(curSound => curSound.IsPlaying());
+        return _currentSounds.Any(curSound => curSound.IsPlaying());
     }
     
     /// <summary>
@@ -54,7 +63,7 @@ public class SoundManger
     public NAudioRecording NewRecording(string path)
     {
         var recording = new NAudioRecording(path);
-        CurrentRecordings.Add(recording);
+        _currentRecordings.Add(recording);
         return recording;
     }
     public void StartRecording(IRecording recording)
@@ -65,12 +74,12 @@ public class SoundManger
     public void StopRecording(IRecording recording)
     {
         recording.Stop();
-        CurrentRecordings.Remove(recording);
+        _currentRecordings.Remove(recording);
     }
 
     public bool IsRecordingActive()
     {
-        return CurrentRecordings.Any(curRecording => curRecording.IsRecording());
+        return _currentRecordings.Any(curRecording => curRecording.IsRecording());
     }
     
     private void OnRecordingStopped(object? sender, EventArgs e)

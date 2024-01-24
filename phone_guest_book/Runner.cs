@@ -1,4 +1,7 @@
-﻿namespace phone_guest_book;
+﻿using phone_guest_book.os.audio;
+using phone_guest_book.OS.Audio.Sound;
+
+namespace phone_guest_book;
 using phone_guest_book.OS.Hardware;
 
 
@@ -7,7 +10,7 @@ public class Runner
     private PinEvent PREVIOUS_PIN_STATUS = PinEvent.None;
     private GpioHandler handler;
     private DateTime _lastInterrupt = DateTime.Now;
-    
+    private SoundManger _soundManager = new SoundManger();
     public void Start()
     {
         handler = new GpioHandler(6);
@@ -27,7 +30,7 @@ public class Runner
             if (currentPinState == PinEvent.Rising)
             {
                 Console.WriteLine(formattedDateTime + " Phone Picked Up");
-                //play_welcome_sound()
+                PlayWelcomeSound();
                 //record_sound()
             }
             // When a person ends the phone call
@@ -35,10 +38,20 @@ public class Runner
             {
                 Console.WriteLine(formattedDateTime + " Phone Ended");
                 //cleanup()
-                //reset()
+                Reset();
             }
 
             PREVIOUS_PIN_STATUS = currentPinState;
         }
+    }
+
+    private void PlayWelcomeSound()
+    {
+        _soundManager.PlaySound(new NAudioSound("sounds/welcome.wav"));
+    }
+
+    private void Reset()
+    {
+        _soundManager.StopPlaying();
     }
 }
