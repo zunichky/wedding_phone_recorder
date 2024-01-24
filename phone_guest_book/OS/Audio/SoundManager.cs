@@ -9,8 +9,8 @@ namespace phone_guest_book.os.audio;
 
 public class SoundManger
 {
-    private List<Player> _currentSounds { get; set; } = [];
-    private List<IRecording> _currentRecordings { get; set; } = [];
+    private List<Player> CurrentSounds { get; set; } = [];
+    private List<Recorder> CurrentRecordings { get; set; } = [];
     //TODO: Settings (volume, etc)
     public void PlaySound(string fileName)
     {
@@ -19,13 +19,13 @@ public class SoundManger
         {
             curSound.Play(fileName);
             curSound.PlaybackFinished += OnPlaybackStopped;
-            _currentSounds.Add(curSound);
+            CurrentSounds.Add(curSound);
         }
     }
 
     public void StopPlaying()
     {
-        foreach (var sound in _currentSounds)
+        foreach (var sound in CurrentSounds)
         {
             if (sound.Playing)
                 sound.Stop();
@@ -41,7 +41,7 @@ public class SoundManger
     private void OnPlaybackStopped(object? sender, EventArgs e)
     {
         // Remove Sound from active list
-        // RemoveSound(e.soundObgject)
+        // RemoveSound(e.soundObject)
     }
     
     /// <summary>
@@ -50,7 +50,7 @@ public class SoundManger
     /// <returns></returns>
     public bool IsSoundPlaying()
     {
-        return _currentSounds.Any(curSound => curSound.Playing);
+        return CurrentSounds.Any(curSound => curSound.Playing);
     }
     
     /// <summary>
@@ -62,10 +62,10 @@ public class SoundManger
         return curSound.IsPlaying();
     }
 
-    public NAudioRecording NewRecording(string path)
+    public Recorder NewRecording(string path)
     {
-        var recording = new NAudioRecording(path);
-        _currentRecordings.Add(recording);
+        var recording = new Recorder();
+        CurrentRecordings.Add(recording);
         return recording;
     }
     public void StartRecording(IRecording recording)
@@ -73,20 +73,29 @@ public class SoundManger
         recording.Start();
     }
 
-    public void StopRecording(IRecording recording)
+    public void StopRecording(Recorder recording)
     {
         recording.Stop();
-        _currentRecordings.Remove(recording);
+        CurrentRecordings.Remove(recording);
+    }
+
+    public void StopAllRecordings()
+    {
+        foreach (var recording in CurrentRecordings)
+        {
+            if (recording.Recording)
+                recording.Stop();
+        }
     }
 
     public bool IsRecordingActive()
     {
-        return _currentRecordings.Any(curRecording => curRecording.IsRecording());
+        return CurrentRecordings.Any(curRecording => curRecording.Recording);
     }
     
     private void OnRecordingStopped(object? sender, EventArgs e)
     {
         // Remove Sound from active list
-        // RemoveSound(e.soundObgject)
+        // RemoveSound(e.soundObject)
     }
 }
