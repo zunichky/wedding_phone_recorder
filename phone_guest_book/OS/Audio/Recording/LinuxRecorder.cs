@@ -4,7 +4,7 @@
     {
         protected override string GetBashCommand(string fileName)
         {
-            string command = $"arecord -vv --format=cd ";
+            string command = $"arecord --device=\"hw:1,0\" -vv --format=cd ";
 
             if (Path.GetExtension(fileName).ToLower().Equals(".mp3"))
             {
