@@ -11,13 +11,14 @@ public class SoundManger
     private List<ISound> CurrentSounds { get; set; } = [];
     private List<IRecording> CurrentRecordings { get; set; } = [];
     //TODO: Settings (volume, etc)
-    public ISound PlaySound(string path)
+    public void PlaySound(NAudioSound sound)
     {
-        ISound sound = new NAudioSound(path);
-        sound.Play();
-        sound.SoundFinished += OnPlaybackStopped;
-        CurrentSounds.Add(sound);
-        return sound;
+        if (!sound.IsPlaying())
+        {
+            sound.Play();
+            sound.SoundFinished += OnPlaybackStopped;
+            CurrentSounds.Add(sound);
+        }
     }
 
     public void StopPlaying(ISound sound)
