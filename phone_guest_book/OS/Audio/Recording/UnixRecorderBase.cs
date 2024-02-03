@@ -30,6 +30,16 @@ namespace phone_guest_book.OS.Audio.Recording
         {
             if (_process != null)
             {
+                BashUtil.StartBashProcess("kill -SIGINT " + _process.Id);
+                int count = 0;
+                
+                //wait a total of 2 seconds for the process to finish gracefully
+                while(!_process.HasExited && count < 20)
+                {
+                    Thread.Sleep(100);
+                    count++;
+                }
+                
                 _process.Kill();
                 _process.Dispose();
                 _process = null;

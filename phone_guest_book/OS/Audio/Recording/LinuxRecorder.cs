@@ -5,7 +5,7 @@
         protected override string GetBashCommand(string fileName)
         {
             //string command = $"arecord -vv --format=cd ";
-            string command =  "libcamera-vid -t 0 --codec libav -v 0 --vflip --width 1920 --height 1080 --bitrate 7000000 --libav-audio --audio-device alsa_input.usb-Logitech_Logi_USB_Headset-00.mono-fallback -o ";
+            string command =  "libcamera-vid -t 0 -c --codec libav -v 0 --vflip --width 1920 --height 1080 --bitrate 7000000 --libav-audio --audio-device alsa_input.usb-Logitech_Logi_USB_Headset-00.mono-fallback -o ";
 
             if (Path.GetExtension(fileName).ToLower().Equals(".mp3"))
             {
