@@ -1,4 +1,5 @@
-﻿using phone_guest_book.Utilities;
+﻿using System.Diagnostics;
+using phone_guest_book.Utilities;
 
 namespace phone_guest_book.OS.Audio.Sound
 {

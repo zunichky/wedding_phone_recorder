@@ -5,6 +5,9 @@
 * western electric 554 rotary phone 
 * microphone
 
+# Setup
+Get Audio Device -> pactl list | grep -A2 'Source #' | grep 'Name: '
+
 ## TODOs
 * Folder structure for recordings
 * Add Recording

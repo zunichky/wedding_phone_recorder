@@ -4,7 +4,7 @@ namespace phone_guest_book.Utilities
 {
     internal static class BashUtil
     {
-        public static Process StartBashProcess(string command)
+        public static Process? StartBashProcess(string command)
         {
             var escapedArgs = command.Replace("\"", "\\\"");
 

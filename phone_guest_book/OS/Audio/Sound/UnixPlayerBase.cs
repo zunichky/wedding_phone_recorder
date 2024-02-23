@@ -5,10 +5,10 @@ namespace phone_guest_book.OS.Audio.Sound
 {
     internal abstract class UnixPlayerBase : IPlayer
     {
-        private Process _process = null;
+        private Process? _process = null;
 
-        internal const string PauseProcessCommand = "kill -STOP {0}";
-        internal const string ResumeProcessCommand = "kill -CONT {0}";
+        private const string PauseProcessCommand = "kill -STOP {0}";
+        private const string ResumeProcessCommand = "kill -CONT {0}";
 
         public event EventHandler PlaybackFinished;
 
