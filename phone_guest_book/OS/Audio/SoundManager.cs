@@ -63,7 +63,7 @@ public class SoundManger
         return curSound.IsPlaying();
     }
 
-    public Recorder NewRecording(string path, byte volume = 75)
+    public Recorder NewRecording(string path, int volume = 75)
     {
         var recording = new Recorder();
         recording.SetVolume(volume);

@@ -26,7 +26,8 @@ namespace phone_guest_book.OS.Audio.Recording
             if (percent > 100)
                 throw new ArgumentOutOfRangeException(
                     nameof(percent), "Percent can't exceed 100");
-            int scaledPercent = (percent / 100) * 65000;
+            // ReSharper disable once PossibleLossOfFraction
+            int scaledPercent = (int)((float)percent / 100 * 65000);
             var tempProcess = BashUtil.StartBashProcess(
                 $"pacmd set-source-volume 4 {scaledPercent}");
             tempProcess.WaitForExit();
