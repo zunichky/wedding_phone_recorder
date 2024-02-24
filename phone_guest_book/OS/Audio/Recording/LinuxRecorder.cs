@@ -7,7 +7,7 @@
             //string command = $"arecord -vv --format=cd ";
             string command =  "libcamera-vid -t 0 -c --codec libav -v 0 " +
                               "--vflip --width 1920 --height 1080 --bitrate 7000000 " +
-                              "--libav-audio --audio-source alsa --audio-device hw:CARD=Audio --audio-channels 1 " +
+                              "--libav-audio --audio-source alsa --audio-device hw:CARD=Device --audio-channels 1 " +
                               "-o " + fileName;
 
             if (Path.GetExtension(fileName).ToLower().Equals(".mp3"))
