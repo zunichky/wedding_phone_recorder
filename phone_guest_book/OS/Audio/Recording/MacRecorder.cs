@@ -6,5 +6,10 @@
         {
             return $"ffmpeg -f avfoundation -i \":1\" {fileName}";
         }
+        
+        public override Task SetVolume(byte percent)
+        {
+            throw new NotImplementedException(); 
+        }
     }
 }

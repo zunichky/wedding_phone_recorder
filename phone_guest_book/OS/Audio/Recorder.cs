@@ -54,5 +54,10 @@ namespace phone_guest_book.OS.Audio
         {
             RecordingFinished?.Invoke(this, e);
         }
+        
+        public async Task SetVolume(byte percent)
+        {
+            await _internalRecorder.SetVolume(percent);
+        }
     }
 }

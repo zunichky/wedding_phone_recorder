@@ -50,8 +50,12 @@ namespace phone_guest_book.OS.Audio.Recording
                 HandleRecordingFinished();
             }
         }
-
-        internal void HandleRecordingFinished()
+        
+        public Task SetVolume(byte percent)
+        {
+            throw new NotImplementedException(); 
+        }
+        private void HandleRecordingFinished()
         {
             if (Recording)
             {

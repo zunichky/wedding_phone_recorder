@@ -6,8 +6,9 @@
 * microphone
 
 # Setup
-Get Audio Device -> pactl list | grep -A2 'Source #' | grep 'Name: '
-
+Get Audio Device ->  arecord -L  Ex) hw:CARD=Device
+Test Recording -> arecord -vv -fdat foo.wav
+Test Sound -> speaker-test -t wav -c 2 -l 5
 ## TODOs
 * Folder structure for recordings
 * Add Recording
