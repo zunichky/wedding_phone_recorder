@@ -58,7 +58,7 @@ public class Runner
         Directory.CreateDirectory(finalFolder);
         var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp4");
 
-        _soundManager.NewRecording(fullPath, 50);
+        _soundManager.NewRecording(fullPath, 75);
     }
 
     private void Cleanup()
