@@ -48,7 +48,7 @@ public class Runner
 
     private void PlayWelcomeSound()
     { 
-        _soundManager.PlaySound("sounds/welcome.wav");
+        _soundManager.PlaySound("sounds/welcome.wav", 50);
     }
 
     private void StartRecording()
@@ -56,7 +56,6 @@ public class Runner
         var homeDirectory = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
         var finalFolder = Path.Combine(homeDirectory, "Recordings");
         Directory.CreateDirectory(finalFolder);
-        //var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp3");
         var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp4");
 
         _soundManager.NewRecording(fullPath);

@@ -12,11 +12,12 @@ public class SoundManger
     private List<Player> CurrentSounds { get; set; } = [];
     private List<Recorder> CurrentRecordings { get; set; } = [];
     //TODO: Settings (volume, etc)
-    public void PlaySound(string fileName)
+    public void PlaySound(string fileName, byte volume = 100)
     {
         Player curSound = new Player();
         if (!curSound.Playing)
         {
+            curSound.SetVolume(volume);
             curSound.Play(fileName);
             curSound.PlaybackFinished += OnPlaybackStopped;
             CurrentSounds.Add(curSound);
