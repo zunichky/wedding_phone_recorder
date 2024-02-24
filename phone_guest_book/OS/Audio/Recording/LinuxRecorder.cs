@@ -20,7 +20,7 @@ namespace phone_guest_book.OS.Audio.Recording
             return command;
         }
         
-        public override Task SetVolume(byte percent)
+        public override Task SetVolume(int percent)
         {
             // Current microphone has a volume of 0 - 65000
             if (percent > 100)

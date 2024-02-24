@@ -8,7 +8,7 @@
 
         Task Record(string fileName);
         Task Stop();
-        Task SetVolume(byte percent);
+        Task SetVolume(int percent);
 
     }
 }

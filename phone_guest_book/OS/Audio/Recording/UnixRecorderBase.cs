@@ -55,7 +55,7 @@ namespace phone_guest_book.OS.Audio.Recording
             return Task.CompletedTask;
         }
         
-        public abstract Task SetVolume(byte percent);
+        public abstract Task SetVolume(int percent);
 
         private void HandleRecordingFinished(object sender, EventArgs e)
         {

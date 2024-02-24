@@ -51,7 +51,7 @@ namespace phone_guest_book.OS.Audio.Recording
             }
         }
         
-        public Task SetVolume(byte percent)
+        public Task SetVolume(int percent)
         {
             throw new NotImplementedException(); 
         }
