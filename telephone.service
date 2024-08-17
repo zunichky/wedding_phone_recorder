@@ -1,0 +1,16 @@
+[Service]
+Type=idle
+
+User=dev
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+Environment="PULSE_RUNTIME_PATH=/run/user/1000/pulse/"
+WorkingDirectory=/home/dev/telephone_publish
+ExecStart=/home/dev/telephone_publish/phone_guest_book
+
+Restart=always
+RestartSec=30
+
+Environment=DOTNET_ROOT=/opt/dotnet
+
+[Install]
+WantedBy=multi-user.target
