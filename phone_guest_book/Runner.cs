@@ -9,10 +9,10 @@ using phone_guest_book.OS.Hardware;
 public class Runner
 {
     private PinEvent PREVIOUS_PIN_STATUS = PinEvent.None;
-    private GpioHandler handler;
+    private GpioHandler? handler;
     private SoundManger _soundManager = new SoundManger();
 
-    public void Start()
+    public async void Start()
     {
         handler = new GpioHandler(6);
 
@@ -31,15 +31,15 @@ public class Runner
             {
                 Console.WriteLine(formattedDateTime + " Phone Picked Up");
                 PlayWelcomeSound();
-                StartRecording();
+                await StartRecording();
                 //record_sound()
             }
             // When a person ends the phone call
             else
             {
                 Console.WriteLine(formattedDateTime + " Phone Ended");
-                Cleanup();
-                Reset();
+                await Cleanup();
+                await Reset();
             }
 
             PREVIOUS_PIN_STATUS = currentPinState;
@@ -51,22 +51,22 @@ public class Runner
         _soundManager.PlaySound("sounds/welcome.wav", 50);
     }
 
-    private void StartRecording()
+    private async Task StartRecording()
     {
         var homeDirectory = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
         var finalFolder = Path.Combine(homeDirectory, "Recordings");
         Directory.CreateDirectory(finalFolder);
         var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp4");
 
-        _soundManager.NewRecording(fullPath, 75);
+        await _soundManager.NewRecording(fullPath, 75);
     }
 
-    private void Cleanup()
+    private async Task Cleanup()
     {
-        _soundManager.StopAllRecordings();
+        await _soundManager.StopAllRecordings();
     }
-    private void Reset()
+    private async Task Reset()
     { 
-        _soundManager.StopPlaying();
+        await _soundManager.StopPlaying();
     }
 }

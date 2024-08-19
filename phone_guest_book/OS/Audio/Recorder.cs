@@ -10,7 +10,7 @@ namespace phone_guest_book.OS.Audio
         /// <summary>
         /// Internally, sets the Recording flag to false. Additional handlers can be attached to it to handle any custom logic.
         /// </summary>
-        public event EventHandler RecordingFinished;
+        public event EventHandler? RecordingFinished;
 
         /// <summary>
         /// Indicates that the audio is currently being recorded.
@@ -50,7 +50,7 @@ namespace phone_guest_book.OS.Audio
             await _internalRecorder.Stop();
         }
 
-        private void OnRecordingFinished(object sender, EventArgs e)
+        private void OnRecordingFinished(object? sender, EventArgs e)
         {
             RecordingFinished?.Invoke(this, e);
         }
