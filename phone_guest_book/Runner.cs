@@ -48,7 +48,7 @@ public class Runner
 
     private void PlayWelcomeSound()
     { 
-        _soundManager.PlaySound("sounds/welcome.wav", 50);
+        _soundManager.PlaySound("sounds/welcome.wav", 60);
     }
 
     private async Task StartRecording()
@@ -58,7 +58,7 @@ public class Runner
         Directory.CreateDirectory(finalFolder);
         var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp4");
 
-        await _soundManager.NewRecording(fullPath, 75);
+        await _soundManager.NewRecording(fullPath, 85);
     }
 
     private async Task Cleanup()
