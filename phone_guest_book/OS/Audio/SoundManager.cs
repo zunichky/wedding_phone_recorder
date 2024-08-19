@@ -12,24 +12,24 @@ public class SoundManger
     private List<Player> CurrentSounds { get; set; } = [];
     private List<Recorder> CurrentRecordings { get; set; } = [];
     //TODO: Settings (volume, etc)
-    public void PlaySound(string fileName, byte volume = 100)
+    public async void PlaySound(string fileName, byte volume = 100)
     {
         Player curSound = new Player();
         if (!curSound.Playing)
         {
-            curSound.SetVolume(volume);
-            curSound.Play(fileName);
+            await curSound.SetVolume(volume);
+            await curSound.Play(fileName);
             curSound.PlaybackFinished += OnPlaybackStopped;
             CurrentSounds.Add(curSound);
         }
     }
 
-    public void StopPlaying()
+    public async Task StopPlaying()
     {
         foreach (var sound in CurrentSounds)
         {
             if (sound.Playing)
-                sound.Stop();
+                await sound.Stop();
         }
     }
     
@@ -63,11 +63,11 @@ public class SoundManger
         return curSound.IsPlaying();
     }
 
-    public Recorder NewRecording(string path, int volume = 75)
+    public async Task<Recorder> NewRecording(string path, int volume = 75)
     {
         var recording = new Recorder();
-        recording.SetVolume(volume);
-        recording.Record(path);
+        await recording.SetVolume(volume);
+        await recording.Record(path);
         CurrentRecordings.Add(recording);
         return recording;
     }
@@ -76,18 +76,18 @@ public class SoundManger
         recording.Start();
     }
 
-    public void StopRecording(Recorder recording)
+    public async Task StopRecording(Recorder recording)
     {
-        recording.Stop();
+        await recording.Stop();
         CurrentRecordings.Remove(recording);
     }
 
-    public void StopAllRecordings()
+    public async Task StopAllRecordings()
     {
         foreach (var recording in CurrentRecordings)
         {
             if (recording.Recording)
-                recording.Stop();
+                await recording.Stop();
         }
     }
 
