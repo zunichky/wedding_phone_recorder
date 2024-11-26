@@ -1,6 +1,7 @@
 ﻿using phone_guest_book.os.audio;
 using phone_guest_book.OS.Audio;
 using phone_guest_book.OS.Audio.Sound;
+using phone_guest_book.Utilities;
 
 namespace phone_guest_book;
 using phone_guest_book.OS.Hardware;
@@ -10,11 +11,18 @@ public class Runner
 {
     private PinEvent PREVIOUS_PIN_STATUS = PinEvent.None;
     private GpioHandler? handler;
-    private SoundManger _soundManager = new SoundManger();
+    private SoundManger _soundManager = new();
+    private DirectoryInfo? _dataDirectory;
 
     public async void Start()
     {
         handler = new GpioHandler(6);
+
+        var usbDrive = FileUtil.FindUsbDrive("telephone");
+        if (usbDrive != null)
+            _dataDirectory = usbDrive.RootDirectory;
+        else
+            _dataDirectory = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
 
         while (true)
         {
@@ -48,13 +56,13 @@ public class Runner
 
     private void PlayWelcomeSound()
     { 
-        _soundManager.PlaySound("sounds/welcome.wav", 60);
+        _soundManager.PlaySound(Path.Combine("sounds/welcome.wav"), 60);
     }
 
     private async Task StartRecording()
     {
-        var homeDirectory = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
-        var finalFolder = Path.Combine(homeDirectory, "Recordings");
+        //var homeDirectory = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
+        var finalFolder = Path.Combine(_dataDirectory.FullName, "Recordings");
         Directory.CreateDirectory(finalFolder);
         var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp4");
 

@@ -23,5 +23,26 @@
             if (Directory.Exists(TempDirName))
                 Directory.Delete(TempDirName, true);
         }
+
+        public static DriveInfo? FindUsbDrive(string usbName = "")
+        {
+            string[] drives = Environment.GetLogicalDrives();
+            foreach (var drive in drives)
+            {
+                try
+                {
+                    DriveInfo driveInfo = new DriveInfo(drive);
+                    if (driveInfo.VolumeLabel == usbName)
+                    {
+                        return driveInfo;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Exception on drive info");
+                }
+            }
+            return null;
+        }
     }
 }
