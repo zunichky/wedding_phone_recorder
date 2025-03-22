@@ -20,9 +20,14 @@ public class Runner
 
         var usbDrive = FileUtil.FindUsbDrive("telephone");
         if (usbDrive != null)
+        {
             _dataDirectory = usbDrive.RootDirectory;
+            Console.WriteLine("Using USB");
+        }
         else
+        {
             _dataDirectory = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+        }
 
         while (true)
         {
@@ -56,13 +61,13 @@ public class Runner
 
     private void PlayWelcomeSound()
     { 
-        _soundManager.PlaySound(Path.Combine("sounds/welcome.wav"), 60);
+        _soundManager.PlaySound(Path.Combine(_dataDirectory.FullName, "sounds/welcome.wav"), 60);
     }
 
     private async Task StartRecording()
     {
         //var homeDirectory = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
-        var finalFolder = Path.Combine(_dataDirectory.FullName, "Recordings");
+        var finalFolder = Path.Combine(_dataDirectory.FullName, "recordings");
         Directory.CreateDirectory(finalFolder);
         var fullPath = Path.Combine(finalFolder, Utilities.Utilities.GetUniqueFileName(finalFolder) + ".mp4");
 
