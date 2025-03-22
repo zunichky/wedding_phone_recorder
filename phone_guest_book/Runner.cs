@@ -18,7 +18,10 @@ public class Runner
     {
         handler = new GpioHandler(6);
 
-        var usbDrive = FileUtil.FindUsbDrive("telephone");
+        // program needs the following file/folders
+        // _dataDirectory/sounds/welcome.wav
+        // _dataDirectory/recordings
+        var usbDrive = FileUtil.FindUsbDrive("/media/usb");
         if (usbDrive != null)
         {
             _dataDirectory = usbDrive.RootDirectory;
