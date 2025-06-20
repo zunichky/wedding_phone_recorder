@@ -6,6 +6,7 @@ namespace phone_guest_book.OS.Audio.Recording
     internal abstract class UnixRecorderBase : IRecorder
     {
         private Process? _process = null;
+        private string _filepath = ""
 
         public event EventHandler RecordingFinished;
 
@@ -15,6 +16,7 @@ namespace phone_guest_book.OS.Audio.Recording
 
         public async Task Record(string filePath)
         {
+            _filepath = filePath;
             await Stop();
             var bashToolName = GetBashCommand(filePath);
             _process = BashUtil.StartBashProcess(
@@ -51,6 +53,7 @@ namespace phone_guest_book.OS.Audio.Recording
             }
 
             Recording = false;
+            BashUtil.StartBashProcess("sync " + _filepath);
 
             return Task.CompletedTask;
         }
