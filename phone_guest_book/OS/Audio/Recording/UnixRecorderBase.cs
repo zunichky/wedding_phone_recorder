@@ -6,7 +6,7 @@ namespace phone_guest_book.OS.Audio.Recording
     internal abstract class UnixRecorderBase : IRecorder
     {
         private Process? _process = null;
-        private string _filepath = ""
+        private string _filepath = "";
 
         public event EventHandler RecordingFinished;
 
