@@ -53,8 +53,7 @@ namespace phone_guest_book.OS.Audio.Recording
             }
 
             Recording = false;
-            BashUtil.StartBashProcess("sync " + _filepath);
-
+            
             return Task.CompletedTask;
         }
         
@@ -65,6 +64,8 @@ namespace phone_guest_book.OS.Audio.Recording
             if (Recording)
             {
                 Recording = false;
+                BashUtil.StartBashProcess("sync " + _filepath + " &");
+                Console.WriteLine("Flushing file");
                 RecordingFinished?.Invoke(this, e);
             }
         }
